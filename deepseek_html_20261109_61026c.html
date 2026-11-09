@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Yan Masters — Masterização Online</title>
+<meta name="description" content="Masterização online com Yan. Antes e depois, planos a partir de R$49,99 e entrega em WAV. Me chama no zap." />
+<style>
+  :root{
+    --bg:#0a0a0b; --panel:#131316; --panel2:#1b1b20; --line:#26262c;
+    --txt:#f4f4f5; --muted:#a1a1aa; --accent:#e7ff4d; --accent2:#4dffb8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  section{padding:88px 20px; scroll-margin-top:72px; max-width:1100px; margin:0 auto}
+  h1,h2,h3{line-height:1.15; letter-spacing:-.02em}
+  h2{font-size:clamp(1.6rem,4vw,2.4rem); margin-bottom:14px}
+  p.lead{color:var(--muted); max-width:62ch; font-size:1.05rem}
+  .eyebrow{font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:10px}
+
+  /* NAV */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(10,10,11,.82); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1100px; margin:0 auto; padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brand{font-weight:800; letter-spacing:-.03em; font-size:1.15rem}
+  .brand span{color:var(--accent)}
+  .nav-links{display:flex; gap:22px; font-size:.92rem}
+  .nav-links a{color:var(--muted); text-decoration:none; transition:color .2s}
+  .nav-links a:hover{color:var(--txt)}
+  @media(max-width:820px){ .nav-links{display:none} }
+
+  /* HERO */
+  #hero{padding-top:140px; text-align:center; min-height:70vh; display:flex; flex-direction:column; justify-content:center; align-items:center}
+  #hero h1{font-size:clamp(2.4rem,7vw,4.6rem); font-weight:900}
+  #hero h1 span{color:var(--accent)}
+  #hero .sub{color:var(--muted); font-size:1.15rem; margin-top:18px; max-width:52ch}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:32px}
+  .btn{
+    display:inline-block; padding:14px 26px; border-radius:999px;
+    font-weight:700; text-decoration:none; transition:transform .15s, filter .2s;
+    border:1px solid transparent;
+  }
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--accent); color:#0a0a0b}
+  .btn-primary:hover{filter:brightness(1.08)}
+  .btn-ghost{border-color:var(--line); color:var(--txt)}
+  .btn-ghost:hover{background:var(--panel)}
+
+  /* ANTES E DEPOIS */
+  .ab-grid{display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); margin-top:34px}
+  .ab-card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:22px}
+  .ab-card h3{font-size:1.05rem; margin-bottom:16px}
+  .ab-card h3 small{color:var(--muted); font-weight:400}
+  .ab-controls{display:flex; align-items:center; gap:12px}
+  .ab-toggle{
+    display:inline-flex; background:var(--panel2); border-radius:999px; padding:4px; border:1px solid var(--line);
+  }
+  .ab-toggle button{
+    background:none; border:0; color:var(--muted); font-weight:700; font-size:.85rem;
+    padding:8px 18px; border-radius:999px; cursor:pointer; transition:.2s;
+  }
+  .ab-toggle button.active{background:var(--accent); color:#0a0a0b}
+  .ab-play{
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--line);
+    background:var(--panel2); color:var(--txt); cursor:pointer; font-size:1rem;
+    display:grid; place-items:center;
+  }
+  .ab-play:hover{background:#222}
+  .ab-time{color:var(--muted); font-size:.8rem; font-variant-numeric:tabular-nums; margin-left:auto}
+
+  /* COMO FUNCIONA */
+  .steps{display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin-top:34px}
+  .step{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:24px}
+  .step .num{
+    width:38px; height:38px; border-radius:10px; background:var(--accent); color:#0a0a0b;
+    display:grid; place-items:center; font-weight:900; margin-bottom:16px;
+  }
+  .step h3{font-size:1.05rem; margin-bottom:8px}
+  .step p{color:var(--muted); font-size:.95rem}
+
+  /* MASTERIZAÇÃO CTA */
+  #masterizacao{background:var(--panel); border:1px solid var(--line); border-radius:24px; margin:40px auto; padding:56px 28px; text-align:center}
+  #masterizacao h2{font-size:clamp(1.7rem,4.5vw,2.8rem)}
+  #masterizacao p{color:var(--muted); margin-top:14px; max-width:60ch; margin-inline:auto}
+
+  /* PLANOS */
+  .plans{display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); margin-top:44px; text-align:left}
+  .plan{background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:28px; display:flex; flex-direction:column}
+  .plan.highlight{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset, 0 20px 60px -30px rgba(231,255,77,.35)}
+  .plan .tag{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:700}
+  .plan h3{font-size:1.35rem; margin:10px 0 4px}
+  .plan .price{font-size:2.1rem; font-weight:900; letter-spacing:-.03em; margin:8px 0 20px}
+  .plan .price small{font-size:.9rem; color:var(--muted); font-weight:500}
+  .plan ul{list-style:none; display:flex; flex-direction:column; gap:10px; color:var(--muted); font-size:.94rem; margin-bottom:24px}
+  .plan ul li{position:relative; padding-left:24px}
+  .plan ul li::before{content:"✓"; position:absolute; left:0; color:var(--accent2); font-weight:900}
+  .plan .btn{margin-top:auto; text-align:center}
+  .revisions{margin-top:auto; padding-top:14px; border-top:1px solid var(--line); color:var(--txt); font-weight:700; font-size:.9rem}
+
+  /* FAQ */
+  details{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-top:12px}
+  details summary{cursor:pointer; font-weight:700; list-style:none}
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{content:"+"; float:right; color:var(--accent); font-weight:900}
+  details[open] summary::after{content:"–"}
+  details p{color:var(--muted); margin-top:12px; font-size:.95rem}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line); padding:36px 20px; text-align:center; color:var(--muted); font-size:.9rem}
+  footer strong{color:var(--txt)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand">Yan <span>Masters</span></div>
+    <div class="nav-links">
+      <a href="#antes-depois">Antes e Depois</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#masterizacao">Masterização</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="eyebrow">Masterização online</div>
+  <h1>Yan <span>Masters</span></h1>
+  <p class="sub">Sua música pronta pra rádio, streaming e mídia física — com escuta em vários sistemas e entrega em WAV.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://wa.me/55SEUNUMERO?text=Quero%20masterizar%20minha%20m%C3%BAsica" target="_blank" rel="noopener">Me chama no zap</a>
+    <a class="btn btn-ghost" href="#antes-depois">Ouvir antes e depois</a>
+  </div>
+</section>
+
+<!-- ANTES E DEPOIS -->
+<section id="antes-depois">
+  <div class="eyebrow">A prova</div>
+  <h2>Antes e depois</h2>
+  <p class="lead">Escuta a diferença. Alterna entre o mix e o master no mesmo ponto da faixa — comparação justa, sem pular tempo.</p>
+
+  <div class="ab-grid">
+    <div class="ab-card" data-ab data-mix="AUDIO_MIX_1.wav" data-master="AUDIO_MASTER_1.wav">
+      <h3>Faixa exemplo 1 <small>— substitua os áudios</small></h3>
+      <div class="ab-controls">
+        <button class="ab-play" data-play aria-label="Play/Pause">▶</button>
+        <div class="ab-toggle">
+          <button data-mode="mix" class="active">MIX</button>
+          <button data-mode="master">MASTER</button>
+        </div>
+        <span class="ab-time" data-time>0:00</span>
+      </div>
+      <audio preload="metadata"></audio>
+    </div>
+
+    <div class="ab-card" data-ab data-mix="AUDIO_MIX_2.wav" data-master="AUDIO_MASTER_2.wav">
+      <h3>Faixa exemplo 2 <small>— substitua os áudios</small></h3>
+      <div class="ab-controls">
+        <button class="ab-play" data-play aria-label="Play/Pause">▶</button>
+        <div class="ab-toggle">
+          <button data-mode="mix" class="active">MIX</button>
+          <button data-mode="master">MASTER</button>
+        </div>
+        <span class="ab-time" data-time>0:00</span>
+      </div>
+      <audio preload="metadata"></audio>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="eyebrow">O processo</div>
+  <h2>Como funciona a masterização com o Yan</h2>
+  <p class="lead">Simples, direto e sem enrolação. Você manda a música, eu trato o áudio e devolvo pronto pra distribuir.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <h3>Você me chama no zap</h3>
+      <p>Combinamos o plano, o prazo e o que você quer alcançar com a faixa. Me manda o mix em WAV (sem limitador no master, se der).</p>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <h3>Eu masterizo</h3>
+      <p>Trato o áudio com EQ, compressão, limitação e monitoramento de LUFS/true peak. Testo em celular, fone, JBL e ambiente aberto — pra soar bem em todo lugar.</p>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <h3>Você ouve e pede ajustes</h3>
+      <p>Te mando a versão masterizada. Se quiser mudar algo, você tem direito a ajustes conforme o plano escolhido. Aprovado? Entrego os arquivos finais.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MASTERIZAÇÃO + PLANOS -->
+<section id="masterizacao">
+  <div class="eyebrow">Bora?</div>
+  <h2>Quer largar suas músicas na minha mão pra eu masterizá-las?</h2>
+  <p>Me chama no zap, te respondo em uns dias!</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://wa.me/55SEUNUMERO?text=Quero%20masterizar%20minha%20m%C3%BAsica" target="_blank" rel="noopener">Me chama no zap</a>
+  </div>
+
+  <div class="plans">
+    <!-- BÁSICA -->
+    <div class="plan">
+      <div class="tag">Básica</div>
+      <h3>Básica</h3>
+      <div class="price">R$49,99</div>
+      <ul>
+        <li>EQ, compressor, limitador, monitor de LUFS e monitor de true peak</li>
+        <li>Entrega em WAV 24 bit 44,1kHz</li>
+        <li>Teste em celular e fone</li>
+        <li>Entrega entre -9 e -14 LUFS, o cliente decide</li>
+      </ul>
+      <div class="revisions">Até 3 ajustes</div>
+    </div>
+
+    <!-- BOA -->
+    <div class="plan highlight">
+      <div class="tag">Mais escolhida</div>
+      <h3>Boa</h3>
+      <div class="price">R$62,99</div>
+      <ul>
+        <li>EQ, compressor, limitador, simulador de fita, monitor de LUFS e monitor de true peak</li>
+        <li>Entrega entre -9 e -14 LUFS, o cliente decide</li>
+        <li>Entrega em WAV 24 bit 44,1kHz ou 32f bit 44,1kHz para DAW</li>
+        <li>Teste em celular, fone, JBL e acústica de local aberto</li>
+      </ul>
+      <div class="revisions">Até 6 ajustes</div>
+    </div>
+
+    <!-- PREMIUM -->
+    <div class="plan">
+      <div class="tag">Completa</div>
+      <h3>Premium</h3>
+      <div class="price">R$77,99</div>
+      <ul>
+        <li>EQ, compressor, limitador, simulador de fita, saturador, distorção, EQ dinâmico, compressor multibanda, monitor de LUFS e monitor de true peak</li>
+        <li>Entrega entre -9 e -14 LUFS, o cliente decide</li>
+        <li>Entrega em WAV 24 bit 44,1kHz, 32f bit 44,1kHz para DAW ou 16 bit 48,0kHz pra prensagem em mídia física</li>
+        <li>Masterização separada de instrumental e acapella</li>
+        <li>Opcional: colocar na página de antes e depois do site (é necessário a versão não masterizada)</li>
+        <li>Teste em fone, fone pequeno, fone velho, celular, celular velho, JBL, computador e acústica de ambiente aberto</li>
+      </ul>
+      <div class="revisions">Até 13 ajustes</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="eyebrow">Dúvidas</div>
+  <h2>Perguntas frequentes</h2>
+
+  <details>
+    <summary>Em que formato eu mando o mix?</summary>
+    <p>O ideal é WAV em 24 bit ou 32f bit, sem limitador no master (se possível). Se só tiver MP3, dá pra trabalhar, mas a qualidade final é menor.</p>
+  </details>
+  <details>
+    <summary>Quanto tempo leva?</summary>
+    <p>Depende da fila e do plano. Normalmente respondo em alguns dias e entrego a primeira versão em seguida. Combinamos o prazo no zap antes de começar.</p>
+  </details>
+  <details>
+    <summary>Posso pedir ajustes?</summary>
+    <p>Sim. Cada plano tem um limite de ajustes: Básica até 3, Boa até 6, Premium até 13.</p>
+  </details>
+  <details>
+    <summary>O que é LUFS e por que importa?</summary>
+    <p>LUFS mede o volume percebido da faixa. Streaming normaliza o volume, então masterizar dentro da faixa certa evita que sua música soe baixa ou distorcida nas plataformas. Você decide entre -9 e -14 LUFS.</p>
+  </details>
+  <details>
+    <summary>Você masteriza instrumental e acapella separados?</summary>
+    <p>Sim, no plano Premium. Útil pra shows, playback e versões alternativas.</p>
+  </details>
+</section>
+
+<footer>
+  <strong>Yan Masters</strong> — Masterização online. Feito pra soar bem em todo lugar.
+</footer>
+
+<script>
+  // ---- Player A/B ----
+  document.querySelectorAll('[data-ab]').forEach(function(card){
+    var audio   = card.querySelector('audio');
+    var playBtn = card.querySelector('[data-play]');
+    var timeEl  = card.querySelector('[data-time]');
+    var modeBtns= card.querySelectorAll('[data-mode]');
+    var mixSrc  = card.dataset.mix;
+    var mastSrc = card.dataset.master;
+    var isMaster= false;
+    var playing = false;
+
+    audio.src = mixSrc;
+
+    function fmt(s){
+      if(!isFinite(s)) return '0:00';
+      var m = Math.floor(s/60), sec = Math.floor(s%60);
+      return m + ':' + (sec<10?'0':'') + sec;
+    }
+
+    playBtn.addEventListener('click', function(){
+      if(audio.paused){ audio.play(); } else { audio.pause(); }
+    });
+    audio.addEventListener('play',  function(){ playing=true;  playBtn.textContent='❚❚'; });
+    audio.addEventListener('pause', function(){ playing=false; playBtn.textContent='▶'; });
+    audio.addEventListener('ended', function(){ playing=false; playBtn.textContent='▶'; });
+    audio.addEventListener('timeupdate', function(){ timeEl.textContent = fmt(audio.currentTime); });
+    audio.addEventListener('loadedmetadata', function(){ timeEl.textContent = fmt(audio.currentTime); });
+
+    modeBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var wantMaster = btn.dataset.mode === 'master';
+        if(wantMaster === isMaster) return;
+        var t = audio.currentTime;
+        var wasPlaying = !audio.paused;
+        isMaster = wantMaster;
+        audio.src = isMaster ? mastSrc : mixSrc;
+        audio.currentTime = t;               // comparação justa
+        if(wasPlaying) audio.play();
+        modeBtns.forEach(function(b){ b.classList.toggle('active', b === btn); });
+      });
+    });
+  });
+</script>
+</body>
+</html>
